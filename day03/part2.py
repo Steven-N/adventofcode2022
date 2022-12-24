@@ -18,18 +18,13 @@ def compute(data):
 
     priorities = alphabet_dict()
     score = 0
-    duplicates = set()
+    lines = data.splitlines()
+    groups = [lines[i : i + 3] for i in range(0, len(lines), 3)]  # noqa
+    for group in groups:
 
-    for line in data.splitlines():
-        bag_size = len(line) / 2
-        comp_1, comp_2 = set(line[:bag_size]), set(line[bag_size:])
+        (difference,) = set(group[0]) & set(group[1]) & set(group[2])
 
-        breakpoint()
-        differences = comp_1.union(comp_2)
-        duplicates.add(differences)
-
-    for duplicate in duplicates:
-        score += priorities[duplicate]
+        score += priorities[difference]
 
     return score
 
@@ -44,7 +39,7 @@ CrZsJsPPZsGzwwsLwLmpwMDw
 """
 
 
-@pytest.mark.parametrize(("test_input,expected"), [(INPUT, 157)])
+@pytest.mark.parametrize(("test_input,expected"), [(INPUT, 70)])
 def test(test_input, expected):
     assert compute(test_input) == expected
 

@@ -18,18 +18,13 @@ def compute(data):
 
     priorities = alphabet_dict()
     score = 0
-    duplicates = set()
-
     for line in data.splitlines():
-        bag_size = len(line) / 2
+        bag_size = len(line) // 2
+
         comp_1, comp_2 = set(line[:bag_size]), set(line[bag_size:])
 
-        breakpoint()
-        differences = comp_1.union(comp_2)
-        duplicates.add(differences)
-
-    for duplicate in duplicates:
-        score += priorities[duplicate]
+        (differences,) = comp_1.intersection(comp_2)
+        score += priorities[differences]
 
     return score
 
